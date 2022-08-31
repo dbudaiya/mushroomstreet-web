@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'NavBar',
+}
+</script>
+
 <template>
   <div class="nav-bar">
     <div class="left">
@@ -11,12 +17,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "NavBar"
-};
-</script>
 
 <style scoped>
 .nav-bar {

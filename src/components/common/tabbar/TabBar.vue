@@ -1,30 +1,38 @@
+<script>
+export default {
+  name: 'TabBar',
+  data() {
+    return {
+      active: 0,
+    }
+  },
+}
+</script>
+
 <template>
   <van-tabbar
+    v-model="active"
     :border="false"
     :z-index="100"
     active-color="#ff8198"
     replace
     route
     class="tab-bar"
-    v-model="active"
   >
-    <van-tabbar-item icon="wap-home" to="/">首页</van-tabbar-item>
-    <van-tabbar-item icon="shop" to="/category">分类</van-tabbar-item>
-    <van-tabbar-item icon="shopping-cart" to="/cart">购物车</van-tabbar-item>
-    <van-tabbar-item icon="manager" to="/profile">我的</van-tabbar-item>
+    <van-tabbar-item icon="wap-home" to="/">
+      首页
+    </van-tabbar-item>
+    <van-tabbar-item icon="shop" to="/category">
+      分类
+    </van-tabbar-item>
+    <van-tabbar-item icon="shopping-cart" to="/cart">
+      购物车
+    </van-tabbar-item>
+    <van-tabbar-item icon="manager" to="/profile">
+      我的
+    </van-tabbar-item>
   </van-tabbar>
 </template>
-
-<script>
-export default {
-  name: "TabBar",
-  data() {
-    return {
-      active: 0
-    };
-  }
-};
-</script>
 
 <style scoped>
 /deep/ .van-tabbar {

@@ -1,14 +1,30 @@
+<script>
+export default {
+  name: 'DetailBaseInfo',
+  props: {
+    goods: {
+      type: Object,
+      default() {
+        return {}
+      },
+    },
+  },
+}
+</script>
+
 <template>
   <!-- 判断对象是否为空 -->
-  <div class="base-info" v-if="Object.keys(goods).length !== 0">
-    <div class="info-title">{{ goods.title }}</div>
+  <div v-if="Object.keys(goods).length !== 0" class="base-info">
+    <div class="info-title">
+      {{ goods.title }}
+    </div>
     <div class="info-price">
       <span class="n-price">{{ goods.newPrice }}</span>
       <span class="o-price">{{ goods.oldPrice }}</span>
       <span
+        v-if="goods.discount"
         :style="{ backgroundColor: goods.discountBgColor }"
         class="discount"
-        v-if="goods.discount"
       >
         {{ goods.discount }}
       </span>
@@ -20,31 +36,17 @@
     </div>
     <div class="info-service">
       <span
-        :key="index"
-        class="info-service-item"
         v-for="index in goods.services.length - 1"
         v-if="goods.services[index - 1].icon"
+        :key="index"
+        class="info-service-item"
       >
-        <img :src="goods.services[index - 1].icon" alt="" />
+        <img :src="goods.services[index - 1].icon" alt="">
         <span>{{ goods.services[index - 1].name }}</span>
       </span>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "DetailBaseInfo",
-  props: {
-    goods: {
-      type: Object,
-      default() {
-        return {};
-      }
-    }
-  }
-};
-</script>
 
 <style scoped>
 .base-info {

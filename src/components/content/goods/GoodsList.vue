@@ -1,20 +1,63 @@
+<script>
+export default {
+  name: 'GoodsList',
+  props: {
+    goods: {
+      type: Array,
+      default() {
+        return []
+      },
+    },
+    isRecommend: {
+      type: Boolean,
+      default() {
+        return false
+      },
+    },
+    goodsHeight: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  methods: {
+    imgLoad() {
+      // 发射事件总线
+      this.$bus.$emit('imgLoad')
+    },
+    // 跳转到详情页
+    goodItemClick(item) {
+      if (item.iid)
+        this.$router.push(`/detail/${item.iid}`)
+      else
+        this.$toast(item.title)
+    },
+    // 动态显示图片
+    showImage(item) {
+      return item.img || item.image || item.show.img
+    },
+  },
+}
+</script>
+
 <template>
   <div class="goods-list-box">
-    <p class="recommend" v-show="isRecommend">推荐商品</p>
+    <p v-show="isRecommend" class="recommend">
+      推荐商品
+    </p>
     <div class="goods-list">
       <!-- 循环部分 -->
       <div
-        :key="index"
-        @click="goodItemClick(item)"
-        class="goods-list-item"
         v-for="(item, index) in goods"
+        :key="index"
+        class="goods-list-item"
+        @click="goodItemClick(item)"
       >
         <img
-          @load="imgLoad"
-          alt=""
           v-lazy="showImage(item)"
+          alt=""
           :class="goodsHeight ? 'item-height' : 'item-height2'"
-        />
+          @load="imgLoad"
+        >
         <div class="goods-info">
           <p>{{ item.title }}</p>
           <span class="price">¥{{ item.price }}</span>
@@ -24,48 +67,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "GoodsList",
-  props: {
-    goods: {
-      type: Array,
-      default() {
-        return [];
-      }
-    },
-    isRecommend: {
-      type: Boolean,
-      default() {
-        return false;
-      }
-    },
-    goodsHeight: {
-      type: Boolean,
-      default: true
-    }
-  },
-  methods: {
-    imgLoad() {
-      // 发射事件总线
-      this.$bus.$emit("imgLoad");
-    },
-    // 跳转到详情页
-    goodItemClick(item) {
-      if (item.iid) {
-        this.$router.push(`/detail/${item.iid}`);
-      } else {
-        this.$toast(item.title);
-      }
-    },
-    // 动态显示图片
-    showImage(item) {
-      return item.img || item.image || item.show.img;
-    }
-  }
-};
-</script>
 
 <style scoped>
 .goods-list-box {

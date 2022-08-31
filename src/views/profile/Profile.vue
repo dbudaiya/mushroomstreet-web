@@ -1,29 +1,31 @@
-<template>
-  <div class="profile">
-    <nav-bar class="nav-bar">
-      <div slot="center">小码哥商城</div>
-    </nav-bar>
-    <scroll class="scroll-height">
-      <login />
-      <money />
-      <div class="line"></div>
-      <profile-list />
-    </scroll>
-  </div>
-</template>
-
 <script>
-import NavBar from "@/components/common/navbar/NavBar";
-import Login from "./children/Login";
-import Money from "./children/Money";
-import ProfileList from "./children/profileList";
-import Scroll from "@/components/common/scroll/Scroll";
+import Login from './children/Login'
+import Money from './children/Money'
+import ProfileList from './children/profileList'
+import NavBar from '@/components/common/navbar/NavBar'
+import Scroll from '@/components/common/scroll/Scroll'
 
 export default {
-  name: "Profile",
-  components: { Scroll, ProfileList, Money, Login, NavBar }
-};
+  name: 'Profile',
+  components: { Scroll, ProfileList, Money, Login, NavBar },
+}
 </script>
+
+<template>
+  <div class="profile">
+    <NavBar class="nav-bar">
+      <div slot="center">
+        小码哥商城
+      </div>
+    </NavBar>
+    <Scroll class="scroll-height">
+      <Login />
+      <Money />
+      <div class="line" />
+      <ProfileList />
+    </Scroll>
+  </div>
+</template>
 
 <style scoped>
 .profile {

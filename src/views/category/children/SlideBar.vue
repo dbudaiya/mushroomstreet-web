@@ -1,51 +1,51 @@
-<template>
-  <div class="slide-bar">
-    <scroll class="slide-bar-height">
-      <template v-for="(item, index) in slideBarList">
-        <button
-          :class="currentIndex === index ? 'active' : ''"
-          :key="index"
-          @click="slideBarItemClick(item, index)"
-          class="slide-bar-item"
-        >
-          {{ item.title }}
-        </button>
-      </template>
-    </scroll>
-  </div>
-</template>
-
 <script>
-import Scroll from "@/components/common/scroll/Scroll";
+import Scroll from '@/components/common/scroll/Scroll'
 
 export default {
-  name: "SlideBar",
+  name: 'SlideBar',
   components: { Scroll },
-  data() {
-    return {
-      currentIndex: 0
-    };
-  },
   props: {
     slideBarList: {
       type: Array,
       default() {
-        return [];
-      }
+        return []
+      },
+    },
+  },
+  data() {
+    return {
+      currentIndex: 0,
     }
   },
   methods: {
     slideBarItemClick(item, index) {
       const obj = {
         maitKey: item.maitKey,
-        index
-      };
-      this.currentIndex = index;
-      this.$emit("slideBarItemClick", obj);
-    }
-  }
-};
+        index,
+      }
+      this.currentIndex = index
+      this.$emit('slideBarItemClick', obj)
+    },
+  },
+}
 </script>
+
+<template>
+  <div class="slide-bar">
+    <Scroll class="slide-bar-height">
+      <template v-for="(item, index) in slideBarList">
+        <button
+          :key="index"
+          :class="currentIndex === index ? 'active' : ''"
+          class="slide-bar-item"
+          @click="slideBarItemClick(item, index)"
+        >
+          {{ item.title }}
+        </button>
+      </template>
+    </Scroll>
+  </div>
+</template>
 
 <style scoped>
 .slide-bar {

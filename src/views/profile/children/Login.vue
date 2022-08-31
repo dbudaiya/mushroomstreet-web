@@ -1,3 +1,14 @@
+<script>
+export default {
+  name: 'Login',
+  data() {
+    return {
+      defaultPic: require('@/assets/img/profile/user.png'),
+    }
+  },
+}
+</script>
+
 <template>
   <div class="login">
     <div class="user-pic">
@@ -6,26 +17,15 @@
     <div class="user-info">
       <p>登录/注册</p>
       <div class="phone-num">
-        <img alt="" class="icon-phone" src="@/assets/img/profile/phone.png" />
+        <img alt="" class="icon-phone" src="@/assets/img/profile/phone.png">
         <p>暂未绑定手机号</p>
       </div>
     </div>
     <div class="profile-arrow-right">
-      <img alt="" src="@/assets/img/profile/arrow_right.png" />
+      <img alt="" src="@/assets/img/profile/arrow_right.png">
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "Login",
-  data() {
-    return {
-      defaultPic: require("@/assets/img/profile/user.png")
-    };
-  }
-};
-</script>
 
 <style scoped>
 .login {

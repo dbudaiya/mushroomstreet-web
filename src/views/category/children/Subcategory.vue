@@ -1,28 +1,28 @@
-<template>
-  <div class="category-detail">
-    <div :key="index" class="category-detail-item" v-for="(item, index) in CategoryList">
-      <a :href="item.link"><img :src="item.image" alt="" /></a>
-      <p>{{ item.title }}</p>
-    </div>
-  </div>
-</template>
-
 <script>
-import Scroll from "@/components/common/scroll/Scroll";
+import Scroll from '@/components/common/scroll/Scroll'
 
 export default {
-  name: "Subcategory",
+  name: 'Subcategory',
   components: { Scroll },
   props: {
     CategoryList: {
       type: Array,
       default() {
-        return [];
-      }
-    }
-  }
-};
+        return []
+      },
+    },
+  },
+}
 </script>
+
+<template>
+  <div class="category-detail">
+    <div v-for="(item, index) in CategoryList" :key="index" class="category-detail-item">
+      <a :href="item.link"><img :src="item.image" alt=""></a>
+      <p>{{ item.title }}</p>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .category-detail {

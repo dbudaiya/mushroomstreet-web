@@ -1,15 +1,36 @@
+<script>
+import { formatDate } from '@/common/utils'
+
+export default {
+  name: 'DetailCommentInfo',
+  filters: {
+    showDate(value) {
+      const date = new Date(value * 1000)
+      return formatDate(date, 'yyyy-MM-dd hh:mm')
+    },
+  },
+  props: {
+    commentInfo: {
+      type: Object,
+    },
+  },
+}
+</script>
+
 <template>
   <div>
-    <div class="comment-info" v-if="Object.keys(commentInfo).length !== 0">
+    <div v-if="Object.keys(commentInfo).length !== 0" class="comment-info">
       <div class="info-header">
-        <div class="header-title">用户评价</div>
+        <div class="header-title">
+          用户评价
+        </div>
         <div class="header-more">
           更多
           <i class="arrow-right" />
         </div>
       </div>
       <div class="info-user">
-        <img :src="commentInfo.user.avatar" alt="" />
+        <img :src="commentInfo.user.avatar" alt="">
         <span>{{ commentInfo.user.uname }}</span>
       </div>
       <div class="info-detail">
@@ -19,32 +40,15 @@
           <span>{{ commentInfo.style }}</span>
         </div>
         <div class="info-imgs">
-          <img :key="index" :src="item" alt="" v-for="(item, index) in commentInfo.images" />
+          <img v-for="(item, index) in commentInfo.images" :key="index" :src="item" alt="">
         </div>
       </div>
     </div>
-    <div class="comment-info" style="color: red;" v-else>暂无用户评论</div>
+    <div v-else class="comment-info" style="color: red;">
+      暂无用户评论
+    </div>
   </div>
 </template>
-
-<script>
-import { formatDate } from "@/common/utils";
-
-export default {
-  name: "DetailCommentInfo",
-  props: {
-    commentInfo: {
-      type: Object
-    }
-  },
-  filters: {
-    showDate: function (value) {
-      let date = new Date(value * 1000);
-      return formatDate(date, "yyyy-MM-dd hh:mm");
-    }
-  }
-};
-</script>
 
 <style scoped>
 .comment-info {

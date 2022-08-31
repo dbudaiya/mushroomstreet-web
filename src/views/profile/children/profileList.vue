@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'ProfileList',
+}
+</script>
+
 <template>
   <div class="profile-list">
     <div class="profile-list-item">
@@ -12,7 +18,7 @@
       <van-icon class="profile-list-icon" name="gem" />
       <span style="border-bottom: 0;">会员卡</span>
     </div>
-    <div class="line"></div>
+    <div class="line" />
     <div class="profile-list-item">
       <van-icon class="profile-list-icon" name="shopping-cart" />
       <span>我的购物车</span>
@@ -23,12 +29,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "profileList"
-};
-</script>
 
 <style scoped>
 .profile-list {

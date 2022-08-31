@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'Money',
+}
+</script>
+
 <template>
   <div class="money">
     <div class="money-item">
@@ -21,15 +27,9 @@
       </p>
       <p>我的积分</p>
     </div>
-    <div class="line"></div>
+    <div class="line" />
   </div>
 </template>
-
-<script>
-export default {
-  name: "Money"
-};
-</script>
 
 <style scoped>
 .money {

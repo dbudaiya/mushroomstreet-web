@@ -1,14 +1,14 @@
-<template>
-  <div class="back-top">
-    <img alt="" src="@/assets/img/common/top.png" />
-  </div>
-</template>
-
 <script>
 export default {
-  name: "BackTop"
-};
+  name: 'BackTop',
+}
 </script>
+
+<template>
+  <div class="back-top">
+    <img alt="" src="@/assets/img/common/top.png">
+  </div>
+</template>
 
 <style scoped>
 .back-top {

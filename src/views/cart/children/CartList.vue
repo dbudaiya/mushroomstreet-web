@@ -1,29 +1,119 @@
+<script>
+import { mapGetters, mapMutations } from 'vuex'
+import Scroll from '@/components/common/scroll/Scroll'
+
+export default {
+  name: 'CartList',
+  components: { Scroll },
+  data() {
+    return {
+      checkedAll: false,
+    }
+  },
+  computed: {
+    ...mapGetters(['cartList', 'cartListLength']),
+    // 购物车总价
+    totalPrice() {
+      return this.cartList
+        .filter(item => item.checked)
+        .reduce((prev, item) => prev + item.price * item.count, 0)
+        .toFixed(2)
+    },
+    checkedLength() {
+      return this.cartList.filter(item => item.checked).length
+    },
+  },
+  methods: {
+    ...mapMutations(['clearCartList', 'setCartList']),
+    // 全选
+    handleCheckedAll() {
+      this.cartList.forEach(item => (item.checked = this.checkedAll))
+    },
+    // 反选
+    handleCheckedItem() {
+      const result = this.cartList.filter(item => item.checked)
+      this.checkedAll = result.length > 0 && result.length === this.cartList.length
+    },
+    // 按钮提交
+    onSubmit() {
+      if (this.checkedLength === 0) {
+        this.$toast({
+          type: 'fail',
+          message: '您还没有选中商品哦',
+          forbidClick: true,
+          duration: 1500,
+        })
+      }
+      else {
+        this.$dialog
+          .confirm({
+            title: '温馨提示',
+            message: '您确定要提交订单吗?',
+          })
+          .then(() => {
+            this.$toast({
+              type: 'success',
+              message: `提交 ${this.checkedLength} 条数据成功`,
+              forbidClick: true,
+              duration: 1500,
+            })
+            // 提交数据清空对应购物车数据
+            setTimeout(() => {
+              this.clearCartList()
+              this.checkedAll = false
+            }, 1500)
+          })
+          .catch(err => err)
+      }
+    },
+  },
+  created() {
+    // 每次刷新页面获取本地存储购物车数据
+    const list = JSON.parse(localStorage.getItem('cartList')) || []
+    if (list)
+      this.setCartList(list)
+  },
+  mounted() {
+    // 刷新better-scroll
+    this.$refs.scroll.refresh()
+  },
+}
+</script>
+
 <template>
   <div class="cart-list">
-    <scroll class="scroll-height" ref="scroll">
+    <Scroll ref="scroll" class="scroll-height">
       <!-- 循环部分 -->
-      <div :key="index" class="shop-item" v-for="(item, index) in cartList">
+      <div v-for="(item, index) in cartList" :key="index" class="shop-item">
         <div class="item-selector">
-          <van-checkbox @change="handleCheckedItem" v-model="item.checked" />
+          <van-checkbox v-model="item.checked" @change="handleCheckedItem" />
         </div>
         <div class="item-img">
-          <img :src="item.image" alt="商品图片" />
+          <img :src="item.image" alt="商品图片">
         </div>
         <div class="item-info">
-          <div class="item-title">{{ item.title }}</div>
-          <div class="item-desc">商品描述: {{ item.desc }}</div>
+          <div class="item-title">
+            {{ item.title }}
+          </div>
+          <div class="item-desc">
+            商品描述: {{ item.desc }}
+          </div>
           <div class="info-bottom">
-            <div class="item-price left">¥{{ item.price }}</div>
-            <div class="item-count right">x{{ item.count }}</div>
+            <div class="item-price left">
+              ¥{{ item.price }}
+            </div>
+            <div class="item-count right">
+              x{{ item.count }}
+            </div>
           </div>
         </div>
       </div>
-    </scroll>
+    </Scroll>
 
     <!-- 底部订单栏 -->
     <div class="cart-bottom-bar">
       <div class="cart-bottom-check">
-        <van-checkbox @click="handleCheckedAll" class="checked-all" v-model="checkedAll">
+        <van-checkbox v-model="checkedAll" class="checked-all" @click="handleCheckedAll">
           全选
         </van-checkbox>
       </div>
@@ -33,93 +123,13 @@
         元
       </div>
       <div class="cart-bottom-btn">
-        <button @click="onSubmit">提交订单({{ checkedLength }})</button>
+        <button @click="onSubmit">
+          提交订单({{ checkedLength }})
+        </button>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-import Scroll from "@/components/common/scroll/Scroll";
-import { mapGetters, mapMutations } from "vuex";
-
-export default {
-  name: "CartList",
-  components: { Scroll },
-  data() {
-    return {
-      checkedAll: false
-    };
-  },
-  computed: {
-    ...mapGetters(["cartList", "cartListLength"]),
-    // 购物车总价
-    totalPrice() {
-      return this.cartList
-        .filter(item => item.checked)
-        .reduce((prev, item) => prev + item.price * item.count, 0)
-        .toFixed(2);
-    },
-    checkedLength() {
-      return this.cartList.filter(item => item.checked).length;
-    }
-  },
-  methods: {
-    ...mapMutations(["clearCartList", "setCartList"]),
-    // 全选
-    handleCheckedAll() {
-      this.cartList.forEach(item => (item.checked = this.checkedAll));
-    },
-    // 反选
-    handleCheckedItem() {
-      let result = this.cartList.filter(item => item.checked);
-      this.checkedAll = result.length > 0 && result.length === this.cartList.length;
-    },
-    // 按钮提交
-    onSubmit() {
-      if (this.checkedLength === 0) {
-        this.$toast({
-          type: "fail",
-          message: `您还没有选中商品哦`,
-          forbidClick: true,
-          duration: 1500
-        });
-      } else {
-        this.$dialog
-          .confirm({
-            title: "温馨提示",
-            message: "您确定要提交订单吗?"
-          })
-          .then(() => {
-            this.$toast({
-              type: "success",
-              message: `提交 ${this.checkedLength} 条数据成功`,
-              forbidClick: true,
-              duration: 1500
-            });
-            // 提交数据清空对应购物车数据
-            setTimeout(() => {
-              this.clearCartList();
-              this.checkedAll = false;
-            }, 1500);
-          })
-          .catch(err => err);
-      }
-    }
-  },
-  created() {
-    // 每次刷新页面获取本地存储购物车数据
-    let list = JSON.parse(localStorage.getItem("cartList")) || [];
-    if (list) {
-      this.setCartList(list);
-    }
-  },
-  mounted() {
-    // 刷新better-scroll
-    this.$refs.scroll.refresh();
-  }
-};
-</script>
 
 <style scoped>
 .cart-list {

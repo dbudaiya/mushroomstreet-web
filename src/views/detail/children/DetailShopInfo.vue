@@ -1,7 +1,28 @@
+<script>
+export default {
+  name: 'DetailShopInfo',
+  filters: {
+    sellCountFilter(value) {
+      if (value < 10000)
+        return value
+      return `${(value / 10000).toFixed(1)}万`
+    },
+  },
+  props: {
+    shop: {
+      type: Object,
+      default() {
+        return {}
+      },
+    },
+  },
+}
+</script>
+
 <template>
-  <div class="shop-info" v-if="Object.keys(shop).length !== 0">
+  <div v-if="Object.keys(shop).length !== 0" class="shop-info">
     <div class="shop-top">
-      <img :src="shop.logo" alt="" v-if="shop.logo" />
+      <img v-if="shop.logo" :src="shop.logo" alt="">
       <span class="title">{{ shop.name }}</span>
     </div>
     <div class="shop-middle">
@@ -10,18 +31,22 @@
           <div class="sells-count">
             {{ shop.sells | sellCountFilter }}
           </div>
-          <div class="sells-text">总销量</div>
+          <div class="sells-text">
+            总销量
+          </div>
         </div>
         <div class="info-goods">
           <div class="goods-count">
             {{ shop.goodsCount }}
           </div>
-          <div class="goods-text">全部宝贝</div>
+          <div class="goods-text">
+            全部宝贝
+          </div>
         </div>
       </div>
       <div class="shop-middle-item shop-middle-right">
         <table>
-          <tr :key="index" v-for="(item, index) in shop.score">
+          <tr v-for="(item, index) in shop.score" :key="index">
             <td>{{ item.name }}</td>
             <td :class="{ 'score-better': item.isBetter }" class="score">
               {{ item.score }}
@@ -34,30 +59,12 @@
       </div>
     </div>
     <div class="shop-bottom">
-      <div class="enter-shop">进店逛逛</div>
+      <div class="enter-shop">
+        进店逛逛
+      </div>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "DetailShopInfo",
-  props: {
-    shop: {
-      type: Object,
-      default() {
-        return {};
-      }
-    }
-  },
-  filters: {
-    sellCountFilter(value) {
-      if (value < 10000) return value;
-      return (value / 10000).toFixed(1) + "万";
-    }
-  }
-};
-</script>
 
 <style scoped>
 .shop-info {

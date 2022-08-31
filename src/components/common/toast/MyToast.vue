@@ -1,30 +1,30 @@
-<template>
-  <div class="my-toast" v-show="isShow">
-    <span>{{ message }}</span>
-  </div>
-</template>
-
 <script>
 export default {
-  name: "MyToast",
+  name: 'MyToast',
   data() {
     return {
-      message: "",
-      isShow: false
-    };
+      message: '',
+      isShow: false,
+    }
   },
   methods: {
     toastShow(message, duration = 3000) {
-      this.isShow = true;
-      this.message = message;
+      this.isShow = true
+      this.message = message
       setTimeout(() => {
-        this.isShow = false;
-        this.message = "";
-      }, duration);
-    }
-  }
-};
+        this.isShow = false
+        this.message = ''
+      }, duration)
+    },
+  },
+}
 </script>
+
+<template>
+  <div v-show="isShow" class="my-toast">
+    <span>{{ message }}</span>
+  </div>
+</template>
 
 <style scoped>
 .my-toast {

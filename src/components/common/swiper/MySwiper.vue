@@ -1,39 +1,39 @@
-<template>
-  <div class="swiper-list">
-    <van-swipe :autoplay="4000" indicator-color="#ff0000">
-      <van-swipe-item :key="index" v-for="(item, index) in swiperList">
-        <img :src="item.image" @load="swiperLoad" alt="" />
-      </van-swipe-item>
-    </van-swipe>
-  </div>
-</template>
-
 <script>
 export default {
-  name: "MySwiper",
+  name: 'MySwiper',
   props: {
     swiperList: {
       type: Array,
       default() {
-        return [];
-      }
-    }
+        return []
+      },
+    },
   },
   data() {
     return {
-      isLoad: true
-    };
+      isLoad: true,
+    }
   },
   methods: {
     swiperLoad() {
       if (this.isLoad) {
-        this.$emit("swiperLoad");
-        this.isLoad = false;
+        this.$emit('swiperLoad')
+        this.isLoad = false
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
+
+<template>
+  <div class="swiper-list">
+    <van-swipe :autoplay="4000" indicator-color="#ff0000">
+      <van-swipe-item v-for="(item, index) in swiperList" :key="index">
+        <img :src="item.image" alt="" @load="swiperLoad">
+      </van-swipe-item>
+    </van-swipe>
+  </div>
+</template>
 
 <style scoped>
 .swiper-list /deep/ .van-swipe__indicator {
